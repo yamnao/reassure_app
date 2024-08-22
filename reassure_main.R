@@ -68,6 +68,7 @@ ui <- dashboardPage(
     tabItems(
       #### INFO TAB ---------------------------------------------
       tabItem(tabName = "infos",
+              tags$img(src = "LSHTM_Logo.jpg", width = 100),
               h2(style = "color: #3652a8; margin-left: 200px;;","Welcome to the REASSURe App"),
               br(),
               div(style="max-width: 900px; float: left;; text-align: justify;", "This tool is designed to help you", tags$b("extract, clean, and visualize multiple Standardized Monitoring and Assessment of Relief and Transitions (SMART) surveys simultaneously."), 
