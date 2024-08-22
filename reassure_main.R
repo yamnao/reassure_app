@@ -12,9 +12,9 @@ install_and_load <- function(package_name, install_from_github = NULL) {
 
 # Check and install CRAN packages
 cran_packages <- c(
-  "shiny", "shinydashboard", "shinyFiles", "mast", 
+  "shiny", "shinydashboard", "shinyFiles", 
   "shinyBS", "DT", "RColorBrewer", "ggplot2", 
-  "cowplot", "nipnTK", "ggh4x"
+  "cowplot", "nipnTK", "ggh4x", 'remotes', 'dplyr', 'rio'
 )
 
 lapply(cran_packages, install_and_load)
@@ -23,6 +23,7 @@ lapply(cran_packages, install_and_load)
 install_and_load("smartextract", "yamnao/smartextract")
 install_and_load("smartcleaning", "yamnao/smart_cleaning")
 install_and_load("smartmetadata", "yamnao/smart_visualization")
+install_and_load("mast", "afyac/mast")
 
 # Define UI for the application
 ui <- dashboardPage(
@@ -127,10 +128,8 @@ ui <- dashboardPage(
               uiOutput("country_file_ui"),
               # Title before the button
               tags$div(style = "font-weight: bold; margin-right: 10px;", "Select the folder containing SMART Surveys:"),
-              # shinyDirButton("survey_path", "Select folder contaning .as files (SMART Surveys)",
-              #                "Select Survey Folder", FALSE, class = "cleaning-survey-button"),
-              textInput("file_url", "Enter the file URL or ID:", value = ""),
-              actionButton("fetch_data", "Fetch Data"),
+              shinyDirButton("survey_path", "Select folder contaning .as files (SMART Surveys)",
+                             "Select Survey Folder", FALSE, class = "cleaning-survey-button"),
               bsButton("survey_path_info", label = "", icon = icon("question-circle"), style = "info", size = "extra-small"),
               bsTooltip("survey_path_info", "All the .as file need to be in the same folder", "right"),
               verbatimTextOutput("survey_path_text"),
