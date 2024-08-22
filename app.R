@@ -1,27 +1,28 @@
-if (!requireNamespace("smartextract", quietly = TRUE)) {
-  remotes::install_github("yamnao/smartextract", upgrade = FALSE)
+# Function to install and load required packages
+install_and_load <- function(package_name, install_from_github = NULL) {
+  if (!requireNamespace(package_name, quietly = TRUE)) {
+    if (!is.null(install_from_github)) {
+      remotes::install_github(install_from_github, upgrade = FALSE)
+    } else {
+      install.packages(package_name)
+    }
+  }
+  library(package_name, character.only = TRUE)
 }
-if (!requireNamespace("smartcleaning", quietly = TRUE)) {
-  remotes::install_github("yamnao/smart_cleaning", upgrade = FALSE)
-}
-if (!requireNamespace("smartmetadata", quietly = TRUE)) {
-  remotes::install_github("yamnao/smart_visualization", upgrade = FALSE)
-}
-library(shiny)
-library(shinydashboard)
-library(shinyFiles)
-library(mast)
-library(shinyBS)
-library(DT)
-library(RColorBrewer) 
-library(ggplot2)
-library(cowplot)
-library(nipnTK)
-library(ggh4x)
-library(smartextract)
-library(smartcleaning)
-library(smartmetadata)
 
+# Check and install CRAN packages
+cran_packages <- c(
+  "shiny", "shinydashboard", "shinyFiles", "mast", 
+  "shinyBS", "DT", "RColorBrewer", "ggplot2", 
+  "cowplot", "nipnTK", "ggh4x"
+)
+
+lapply(cran_packages, install_and_load)
+
+# Check and install GitHub packages
+install_and_load("smartextract", "yamnao/smartextract")
+install_and_load("smartcleaning", "yamnao/smart_cleaning")
+install_and_load("smartmetadata", "yamnao/smart_visualization")
 
 # Define UI for the application
 ui <- dashboardPage(
@@ -307,18 +308,18 @@ ui <- dashboardPage(
 server <- function(input, output, session) {
   # Enable shinyFiles
   volumes = getVolumes()()
-  roots <- c(home = fs::path_home(), root = "/")
+  #roots <- c(home = fs::path_home(), root = "/")
   
   ## EXTRACTION FOLDER -----------------------------------------------
-  shinyDirChoose(input, "survey_path", roots = roots)
-  shinyDirChoose(input, "output_path", roots = roots)
+  shinyDirChoose(input, "survey_path", roots = volumes)
+  shinyDirChoose(input, "output_path", roots = volumes)
   survey_path <- reactive({
-    return(parseDirPath(roots = roots, input$survey_path))
+    return(parseDirPath(roots = volumes, input$survey_path))
   })
   
   
   output_path <- reactive({
-    return(parseDirPath(roots = roots, input$output_path))
+    return(parseDirPath(roots = volumes, input$output_path))
   })
   
   output$survey_path_text <- renderText({
