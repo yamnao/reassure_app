@@ -14,7 +14,9 @@ install_and_load <- function(package_name, install_from_github = NULL) {
 cran_packages <- c(
   "shiny", "shinydashboard", "shinyFiles", 
   "shinyBS", "DT", "RColorBrewer", "ggplot2", 
-  "cowplot", "nipnTK", "ggh4x", 'remotes', 'dplyr', 'rio'
+  "cowplot", "nipnTK", "ggh4x", 'remotes', 
+  'dplyr', 'rio', 'lubridate', 'officer',
+  'flextable', 'survey'
 )
 
 lapply(cran_packages, install_and_load)
