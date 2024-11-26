@@ -83,14 +83,14 @@ ui <- dashboardPage(
           style = "max-width: 900px; margin: 0 auto; text-align: justify; padding: 10px;",
           tags$p(
             style = "font-size: 16px; line-height: 1.5;",
-            "This tool is designed to help you ",
-            tags$b("extract, clean, and visualize multiple Standardized Monitoring and Assessment of Relief and Transitions (SMART) surveys simultaneously.")
+            "This tool is designed to help ",
+            tags$b("extracting, cleaning, and visualizing multiple Standardized Monitoring and Assessment of Relief and Transitions (SMART) surveys simultaneously.")
           ),
           tags$p(
             style = "font-size: 16px; line-height: 1.5;",
-            "Developed by LSHTM with support from UNICEF, it streamlines the management and analysis of SMART Surveys. ",
-            "SMART surveys are essential for evaluating nutritional status and mortality. Typically, these surveys are analyzed using the ENA software, which handles only one survey at a time. ",
-            "For projects requiring the analysis of hundreds of SMART surveys at different administrative levels, this tool has been developed to optimize the process. ",
+            "Developed by LSHTM with support from UNICEF, it simplifies the management and analysis of SMART Surveys. ",
+            "SMART surveys are essential for evaluating nutritional status and mortality. Typically, these surveys are analyzed using the ENA software (https://smartmethodology.org), which handles only one survey at a time. ",
+            "In order to help projects requiring the analysis of hundreds of SMART surveys at different administrative levels, this tool has been developed. ",
             "It applies the results of the ENA to several surveys simultaneously and includes additional functionality to improve analysis and management."
           ),
           br(),
@@ -99,23 +99,23 @@ ui <- dashboardPage(
             style = "padding-left: 20px; font-size: 16px;",
             tags$li(
               tags$b("Data Extraction"),
-              ": Extracts SMART Survey content, including nutrition, mortality, and clusters data, along with metadata such as administrative levels."
+              ": Extracting SMART Survey content, including nutrition, mortality, and clusters data, along with metadata such as administrative levels."
             ),
             tags$li(
               tags$b("Data Preprocessing"),
-              ": Cleans nutrition and mortality data by handling missing information, filtering outliers, and removing impossible values based on WHO standards."
+              ": Cleaning nutrition and mortality data by handling missing information, filtering outliers, and removing impossible values based on WHO standards."
             ),
             tags$li(
               tags$b("Coverage Visualization"),
-              ": Visualizes SMART Survey coverage over time or by quality score."
+              ": Visualizing SMART Survey coverage over time or by quality score."
             ),
             tags$li(
               tags$b("Anthropology Visualization"),
-              ": Visualizes nutritional data from SMART surveys, including flagged data or gender distribution."
+              ": Visualizing nutritional data from SMART surveys, including flagged data or gender distribution."
             ),
             tags$li(
               tags$b("Mortality Visualization"),
-              ": Visualizes mortality data from the SMART surveys, such as crude death rates over time."
+              ": Visualizing mortality data from the SMART surveys, such as crude death rates over time."
             )
           ),
           br(),
@@ -138,19 +138,21 @@ ui <- dashboardPage(
           status = "info",
           div(
             style = "font-size: 16px; line-height: 1.5; text-align: justify;",
-            p("REASSURe organizes the SMART surveys and extracts their contents (clusters, nutrition, and mortality data) into a specified output folder. 
-                Each SMART survey will have its own folder containing four files: nutrition, mortality, cluster, and the raw SMART file."),
-            p("In addition, a metadata Excel file will be generated, listing the name, location, and date of each SMART survey."),
-            h4("Parameters :"),
+            p("REASSURe extracts SMART survey their contents (clusters, nutrition, and mortality data) into a specified output folder. 
+                In fact, each SMART survey will have its own folder containing four files: nutrition, mortality, cluster, and the raw SMART file."),
+            p("In addition, a metadata excel file will be generated, listing the name, location, and date of each SMART survey."),
+            tags$b(p("In order to extract SMART contents, the following parameters need to be precised:")),
             tags$ol(
-              tags$li(tags$b("Country: "), "Select the country where the SMART surveys were conducted."),
+              tags$li(tags$b("Select SMART localisation: "), "Select the country where the SMART surveys were conducted."),
               tags$ul(
-                tags$li(tags$b("KEN:"), "Kenya"),
-                tags$li(tags$b("SOM: "), "Somalia"),
-                tags$li(tags$b("No Specified Country: "), "If the location is irrelevant or surveys were conducted in multiple countries."),
-                tags$li(tags$b("Add a Country:"), "Users can upload the other country's administrative level file. Refer to the documentation for file content details.")
+                tags$li("The 'KEN' option refers to Kenya."),
+                tags$li("The 'SOM' option refers to Somalia"),
+                tags$li("The 'No Specified Country' option can be used if the location is irrelevant or surveys were conducted in multiple countries."),
+                tags$li("The 'Add a Country' option can be used if SMART have been done in an other country.", tags$i("Refer to the documentation for the additional content required in this case."))
               ),
+              br(),
               tags$li(tags$b("Folder containing SMART Surveys:"), " Select the folder containing the .as files."),
+              br(),
               tags$li(tags$b("Folder to save the results:"), " Select the folder to save the extracted content.")
             )
           )
@@ -176,7 +178,7 @@ ui <- dashboardPage(
               actionButton("country_info", label = "", icon = icon("question-circle"),
                            class = "btn btn-info btn-sm", 
                            `data-toggle` = "tooltip", 
-                           title = "If the location is irrelevant, select No Specified Country.")
+                           title = "If the location is irrelevant, select 'No Specified Country'.")
             )
           ),
           uiOutput("country_file_ui"),
@@ -193,7 +195,7 @@ ui <- dashboardPage(
                 actionButton("survey_path_info", label = "", icon = icon("question-circle"),
                              class = "btn btn-info btn-sm", 
                              `data-toggle` = "tooltip", 
-                             title = "All the .as file need to be in the same folder.")
+                             title = "All the .as files need to be in the same folder if you want to extract them.")
               )
             ),
             verbatimTextOutput("survey_path_text")
@@ -212,7 +214,7 @@ ui <- dashboardPage(
                 actionButton("output_path_info", label = "", icon = icon("question-circle"),
                              class = "btn btn-info btn-sm", 
                              `data-toggle` = "tooltip", 
-                             title = "NB: the results folder must be different from the SMART survey folder.")
+                             title = "Results folder must be different from the SMART survey folder (one folder per country).")
               )
             ),
             verbatimTextOutput("output_path_text")
@@ -252,13 +254,14 @@ ui <- dashboardPage(
               a(href = "https://pubmed.ncbi.nlm.nih.gov/24883244/", "PubMed Article"), ").",
               "The output folder will contain cleaned nutrition, mortality, and cluster Excel files, along with a 
                 cleaned metadata file containing quality scores and other mortality metrics."),
-            h4("Parameters :"),
+            tags$b(p("In order to clean the SMART contents, the following parameters need to be precised:")),
             tags$ol(
               tags$li(tags$b("Folder containing SMART Surveys extracted:"), " Select the folder with the extracted SMART Survey data (from the first tab)."),
               br(),
-              tags$li(tags$b("Cleaning Type:"), " Select the type of cleaning process you want to execute.")
+              tags$li(tags$b("Type of cleaning:"), " Select the type of cleaning process you want to execute.")
             ),
-            p("Once you have provided the required data, click on the ", tags$b('"Start cleaning"'), " button to initiate the data cleaning process.")
+            p("Once you have provided the required data, click on the ", 
+              tags$b('"Start cleaning"'), " button to initiate the data cleaning process.")
         )),
         bs4Card(
           title = "Parameters",
@@ -274,7 +277,7 @@ ui <- dashboardPage(
               actionButton("cleaning_survey_info", label = "", icon = icon("question-circle"),
                            class = "btn btn-info btn-sm", 
                            `data-toggle` = "tooltip", 
-                           title = "All the .as file need to be in the same folder.")
+                           title = "All the .as files need to be in the same folder if you want to extract them.")
             )),
           verbatimTextOutput("cleaning_survey_path_text"),
           div(
@@ -312,13 +315,17 @@ ui <- dashboardPage(
                 width = 12,
                 status = "info",
                 div(style = "font-size: 16px; line-height: 1.5; text-align: justify;", 
-                  p("This tab provides different visualization and will save them in a folder called", 
+                  p("This tab provides different visualizations to understand the coverage provided by the SMART extracted.
+                    In this tab, you can plot quality scores, sample sizes, recall days and the coverage over years.
+                    In addition, all of these plots would be saved in a folder called", 
                     tags$b("visualization_output"), "."),
-                  h4("Parameters:"),
+                  tags$b(p("In order to understand the coverage of SMART extracted, the following parameters need to be precised:")),
                   p(tags$ol(
                     tags$li(tags$b("Folder containing SMART Surveys cleaned:"), " Select the folder with the cleaned SMART Surveys."),
                     br(),
-                    tags$li(tags$b("Type of plot:"), " Select the plot you want to visualize and save. For each plot, click the ", tags$b('"Start"'), " button to launch the process.")
+                    tags$li(tags$b("Type of plot:"), 
+                            " Select the plot you want to visualize. For each plot, click the ", 
+                            tags$b('"Start Visualization"'), " button to launch the process.")
                   ))
                   )
               ),
@@ -338,7 +345,7 @@ ui <- dashboardPage(
                     actionButton("coverage_survey_info", label = "", icon = icon("question-circle"),
                                  class = "btn btn-info btn-sm", 
                                  `data-toggle` = "tooltip", 
-                                 title = "Folder containing the metadata cleaning file."),
+                                 title = "Select the folder where the SMART contents have been extracted or where the 'metadata_clean.csv' file is saved"),
                     
                   )
                   ),verbatimTextOutput("coverage_survey_path_text"),
@@ -361,9 +368,14 @@ ui <- dashboardPage(
                 status = "secondary",
                 # Add spinner around the explanatory text and image
                 withSpinner(
-                  plotOutput("coverage_plot", 
-                             height = "400px",  # Adjust height as needed
-                             width = "50%"), # Combined output for text and image
+                  div(
+                    style = "display: flex; justify-content: center;",  # Center the content
+                    plotOutput(
+                      "coverage_plot", 
+                      height = "400px",  # Adjust height as needed
+                      width = "50%"      # Set the width of the plot relative to the container
+                    )
+                  ),
                   type = 6, 
                   color = "#f15d20"
                 )
@@ -380,15 +392,16 @@ ui <- dashboardPage(
                 width = 12,
                 status = "info",
                 div(style = "font-size: 16px; line-height: 1.5; text-align: justify;",  
-                p("This tab provides different visualization and will save them in a folder called", 
-                    tags$b("visualization_output"), "."
-                  ),
-                h4("Parameters:"),
+                p("This tab provides different visualizations to understand the anthropology data provided by the SMART extracted.
+                In this tab, you can plot flagged WHZ, WAz and HAZ and percentage of boys/girls.
+                In addition, all of these plots would be saved in a folder called", 
+                  tags$b("visualization_output"), "."),
+                tags$b(p("In order to understand the anthropology data of SMART extracted, the following parameters need to be precised:")),
                 p(tags$ol(
                   tags$li(tags$b("Folder containing SMART Surveys cleaned:"), " Select the folder with the cleaned SMART Surveys."),
                   br(),
                   tags$li(tags$b("Type of plot:"), " Select the plot you want to visualize and save. For each plot, click the ", 
-                          tags$b('"Start"'), 
+                          tags$b('"Start Visualization"'), 
                           " button to launch the process.")
                   )
                   )
@@ -409,7 +422,7 @@ ui <- dashboardPage(
                     actionButton("anthro_survey_info", label = "", icon = icon("question-circle"),
                                  class = "btn btn-info btn-sm", 
                                  `data-toggle` = "tooltip", 
-                                 title = "Folder containing the metadata cleaning file."),
+                                 title = "Select the folder where the SMART contents have been extracted or where the 'metadata_clean.csv' file is saved."),
                     
                   )),
                 verbatimTextOutput("anthro_survey_path_text"),
@@ -435,9 +448,16 @@ ui <- dashboardPage(
                 collapsible = TRUE,
                 width = 12,
                 status = "secondary",
-                div(
-                  style = "display: flex; justify-content: center; align-items: center; max-width: 100%;",
-                  plotOutput("anthro_plot")
+                # Add spinner around the explanatory text and image
+                withSpinner(
+                  div(
+                    style = "display: flex; justify-content: center;",  # Center the content
+                    plotOutput(
+                      "anthro_plot"
+                    )
+                  ),
+                  type = 6, 
+                  color = "#f15d20"
                 )
               )
               ),
@@ -451,13 +471,16 @@ ui <- dashboardPage(
                 width = 12,
                 status = "info",
                 div(style="max-width: 900px; float: left;; text-align: justify;", 
-                p("This tab provides different visualization and will save them in a folder called", 
-                    tags$b("visualization_output"), "."),
-                    h4("Parameters:"),
+                p("This tab provides different visualizations to understand the mortality data provided by the SMART extracted.
+                  In this tab, you can plot crude death rate (cdr) and crude death rate under 5 (under 5-year) over time.
+                  In addition, all of these plots would be saved in a folder called", 
+                  tags$b("visualization_output"), "."),
+                tags$b(p("In order to understand the mortality data of SMART extracted, the following parameters need to be precised:")),
                 p(tags$ol(
                     tags$li(tags$b("Folder containing SMART Surveys cleaned:"), " Select the folder with the cleaned SMART Surveys."),
                     br(),
-                    tags$li(tags$b("Type of plot:"), " Select the plot you want to visualize and save. For each plot, click the ", tags$b('"Start"'), " button to launch the process.")
+                    tags$li(tags$b("Type of plot:"), " Select the plot you want to visualize and save. For each plot, click the ", 
+                            tags$b('"Start Visualization"'), " button to launch the process.")
                   ))
                 )
                 ),
@@ -476,7 +499,7 @@ ui <- dashboardPage(
                     actionButton("mortality_survey_info", label = "", icon = icon("question-circle"),
                                  class = "btn btn-info btn-sm", 
                                  `data-toggle` = "tooltip", 
-                                 title = "Folder containing the metadata cleaning file.")
+                                 title = "Select the folder where the SMART contents have been extracted or where the 'metadata_clean.csv' file is saved.")
                     
                   )
                   ),
