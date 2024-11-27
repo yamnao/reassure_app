@@ -38,7 +38,7 @@ ui <- dashboardPage(
       menuItem("Data Extraction", tabName = "extraction", icon = icon("cogs")),
       menuItem("Data Preprocessing", tabName = "cleaning", icon = icon("broom")),
       menuItem("Coverage Visualization", tabName = "coverage_smart", icon = icon("chart-pie")),
-      menuItem("Anthropology Visualization", tabName = "anthro_smart", icon = icon("chart-line")),
+      menuItem("Anthropometry Visualization", tabName = "anthro_smart", icon = icon("chart-line")),
       menuItem("Mortality Visualization", tabName = "mortality_smart", icon = icon("chart-bar"))
     )
   ),
@@ -110,7 +110,7 @@ ui <- dashboardPage(
               ": Visualizing SMART Survey coverage over time or by quality score."
             ),
             tags$li(
-              tags$b("Anthropology Visualization"),
+              tags$b("Anthropometry Visualization"),
               ": Visualizing nutritional data from SMART surveys, including flagged data or gender distribution."
             ),
             tags$li(
@@ -384,7 +384,7 @@ ui <- dashboardPage(
       ),
       #### VISUALIZATION ANTHRO ----------------------------------------
       tabItem(tabName = "anthro_smart",
-              h2(style = "color: #3652a8;",  "Anthropology"),
+              h2(style = "color: #3652a8;",  "Anthropometry"),
               br(),
               bs4Card(
                 title = "Explanation",
@@ -392,11 +392,11 @@ ui <- dashboardPage(
                 width = 12,
                 status = "info",
                 div(style = "font-size: 16px; line-height: 1.5; text-align: justify;",  
-                p("This tab provides different visualizations to understand the anthropology data provided by the SMART extracted.
+                p("This tab provides different visualizations to understand the Anthropometry data provided by the SMART extracted.
                 In this tab, you can plot flagged WHZ, WAz and HAZ and percentage of boys/girls.
                 In addition, all of these plots would be saved in a folder called", 
                   tags$b("visualization_output"), "."),
-                tags$b(p("In order to understand the anthropology data of SMART extracted, the following parameters need to be precised:")),
+                tags$b(p("In order to understand the Anthropometry data of SMART extracted, the following parameters need to be precised:")),
                 p(tags$ol(
                   tags$li(tags$b("Folder containing SMART Surveys cleaned:"), " Select the folder with the cleaned SMART Surveys."),
                   br(),
